@@ -1,10 +1,7 @@
 abstract class ApiConstants {
-  static const String baseUrl = 'https://accessories-eshop.runasp.net/api/';
-  static const String loginEndpoint = 'auth/login';
-  static const String signUpEndpoint = 'auth/register';
-  static const String categoriesEndpoint = 'categories';
-  static const String verifyEmailEndpoint = 'auth/verify-email';
-  static const String productsEndpoint = "products";
+  static const String baseUrl = 'https://api.themoviedb.org/3/movie/';
+  static const String popular = 'popular';
+  
 
   
   
