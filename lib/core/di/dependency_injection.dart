@@ -16,18 +16,18 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
 
   // theming
-  getIt.registerLazySingleton<ThemeService>(() => getIt());
+   final themeService = ThemeService();
+  getIt.registerSingleton<ThemeService>(themeService);
 
-  final initialTheme = await getIt<ThemeService>().loadTheme();
+  final initialTheme = await themeService.loadTheme();
   getIt.registerSingleton<ThemeMode>(
     initialTheme,
     instanceName: 'initialTheme',
   );
   getIt.registerFactory<ThemeCubit>(
     () => ThemeCubit(
-      
       getIt<ThemeService>(),
-      initialTheme: getIt<ThemeMode>(instanceName: 'initialTheme'),
+     
     ),
   );
 }

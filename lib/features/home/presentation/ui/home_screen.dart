@@ -1,3 +1,4 @@
+import 'package:dark_and_light_theming/core/theme/theme_config.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,22 +22,20 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-         
-               InkWell(
-                onTap: () {
-                   final mode= context.watch<ThemeCubit>().state;
-                final newMode  = (mode == ThemeMode.light)
-                      ? ThemeMode.dark
-                      : ThemeMode.light;
-                  context.read<ThemeCubit>().themeService.saveTheme(
-                    themeMode: newMode,
-                  );
-                },
-                child: Icon( context.watch<ThemeCubit>().state == ThemeMode.light
-                ? Icons.dark_mode_outlined 
-                : Icons.light_mode_outlined,),
-              ),
-          
+          InkWell(
+            onTap: () {
+              final bool isCurrentlyDark =
+                  context.read<ThemeCubit>().state.themeData ==
+                  ThemeConfig.darkTheme;
+              context.read<ThemeCubit>().toggleTheme(!isCurrentlyDark);
+            },
+            child: Icon(
+              context.watch<ThemeCubit>().state.themeData ==
+                      ThemeConfig.darkTheme
+                  ? Icons.dark_mode_outlined
+                  : Icons.light_mode_outlined,
+            ),
+          ),
         ],
       ),
     );

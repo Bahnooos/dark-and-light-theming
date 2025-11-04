@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 
-
-sealed class ThemeState {}
- class ThemeInitial extends ThemeState {}
+class ThemeState {
+  final ThemeData themeData;
+  const ThemeState({required this.themeData});
+}
