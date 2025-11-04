@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dark_and_light_theming/core/theme/theme_config.dart';
+import 'package:dark_and_light_theming/features/home/data/models/moves_response.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_cubit.dart';
+import 'package:dark_and_light_theming/features/home/presentation/ui/move_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,6 +40,21 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                return ListView.builder(
+                  itemBuilder: (context, index) =>
+                      MoveItem(movesResponse: movesResponse),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
