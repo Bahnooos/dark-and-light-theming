@@ -9,10 +9,10 @@ class HomeRepo {
 
   const HomeRepo({required this.apiService});
 
-  Future<ApiResult<List<MovesResponse>>> getMovies({required int page}) async {
+  Future<ApiResult<List<Results>>> getMovies({required int page}) async {
     try {
       final response = await apiService.getPopularMovies(page);
-      return ApiResult.success(response);
+      return ApiResult.success(response.results??[]);
     } catch (e) {
       return ApiResult.failure(ApiErrorHandler.handle(e));
     }

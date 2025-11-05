@@ -10,7 +10,7 @@ abstract class ApiService {
   factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
 
   @GET(ApiConstants.popular)
-  Future<List<MovesResponse>> getPopularMovies(
+  Future<MovesResponse> getPopularMovies(
     @Query('page') int page, {
     @Query('language') String language = 'en',
   });

@@ -7,7 +7,10 @@ class HomeLoading extends HomeState {}
 
 class HomeSuccess<T> extends HomeState {
   T? data;
-  HomeSuccess({this.data});
+  final bool isLoadingMore;
+
+  final String? nextPageError;
+  HomeSuccess({this.data, this.isLoadingMore = false, this.nextPageError});
 }
 
 class HomeError extends HomeState {
