@@ -24,7 +24,7 @@ class _ApiService implements ApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<List<MovesResponse>> getPopularMovies(
+  Future<MovesResponse> getPopularMovies(
     int page, {
     String language = 'en',
   }) async {
@@ -35,7 +35,7 @@ class _ApiService implements ApiService {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<MovesResponse>>(Options(
+    final _options = _setStreamType<MovesResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -51,12 +51,10 @@ class _ApiService implements ApiService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<MovesResponse> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MovesResponse _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => MovesResponse.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = MovesResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

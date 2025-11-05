@@ -24,7 +24,7 @@ Results _$ResultsFromJson(Map<String, dynamic> json) => Results(
       json['backdrop_path'] as String?,
       json['title'] as String?,
       json['overview'] as String?,
-      json['vote_average'] as String?,
+      (json['vote_average'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ResultsToJson(Results instance) => <String, dynamic>{

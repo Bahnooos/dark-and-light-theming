@@ -20,7 +20,7 @@ class Results {
   final String? title;
   final String? overview;
   @JsonKey(name: 'vote_average')
-  final String? rate;
+  final int? rate;
 
   const Results(this.image, this.title, this.overview, this.rate);
   factory Results.fromJson(Map<String, dynamic> json) =>

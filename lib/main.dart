@@ -1,4 +1,5 @@
 import 'package:dark_and_light_theming/core/di/dependency_injection.dart';
+import 'package:dark_and_light_theming/features/home/presentation/logic/home/home_cubit.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_cubit.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_state.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,11 @@ void main() async {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: BlocProvider(
-        create: (context) => getIt<ThemeCubit>(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<ThemeCubit>()),
+          BlocProvider(create: (context) => getIt<HomeCubit>()),
+        ],
         child: DarkAndLightTheming(appRouter: AppRouter()),
       ),
     ),

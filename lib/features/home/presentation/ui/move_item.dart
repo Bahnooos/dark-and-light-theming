@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MoveItem extends StatelessWidget {
-  const MoveItem({super.key, required this.movesResponse});
-  final MovesResponse movesResponse;
+  const MoveItem({super.key, required this.results});
+  final Results results;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CachedNetworkImage(
-        imageUrl: "${ApiConstants.baseUrl}popular${movesResponse.image}",
+        imageUrl: "${ApiConstants.imageBaseUrl}${results.image}",
         placeholder: (context, url) => CircularProgressIndicator(),
       ),
       title: Column(
         children: [
-          Text(movesResponse.title ?? ''),
+          Text(results.title ?? ''),
           4.verticalSpace,
-          Text(movesResponse.rate ?? '0'),
+          Text(results.rate?.toString() ?? '0'),
         ],
       ),
     );

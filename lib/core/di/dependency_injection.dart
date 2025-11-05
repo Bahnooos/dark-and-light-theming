@@ -1,4 +1,6 @@
 import 'package:dark_and_light_theming/core/theme/theme_service.dart';
+import 'package:dark_and_light_theming/features/home/data/repo/home_repo.dart';
+import 'package:dark_and_light_theming/features/home/presentation/logic/home/home_cubit.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_cubit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +16,11 @@ Future<void> setupGetIt() async {
   Dio dio = DioFactory.getDio();
 
   getIt.registerLazySingleton<ApiService>(() => ApiService(dio));
+  getIt.registerLazySingleton<HomeRepo>(() => HomeRepo(apiService: getIt()));
+  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt<HomeRepo>()));
 
   // theming
-   final themeService = ThemeService();
+  final themeService = ThemeService();
   getIt.registerSingleton<ThemeService>(themeService);
 
   final initialTheme = await themeService.loadTheme();
@@ -24,10 +28,5 @@ Future<void> setupGetIt() async {
     initialTheme,
     instanceName: 'initialTheme',
   );
-  getIt.registerFactory<ThemeCubit>(
-    () => ThemeCubit(
-      getIt<ThemeService>(),
-     
-    ),
-  );
+  getIt.registerFactory<ThemeCubit>(() => ThemeCubit(getIt<ThemeService>()));
 }
