@@ -1,14 +1,14 @@
-import 'package:dark_and_light_theming/core/networking/api_errror_handler.dart';
 import 'package:dark_and_light_theming/core/networking/api_result.dart';
 
-typedef PageFetcher<T> = Future<ApiResult<List<T>>> Function({required int page});
+typedef PageFetcher<T> =
+    Future<ApiResult<List<T>>> Function({required int page});
 
 class PaginationService<T> {
   final PageFetcher<T> _fetcher;
   final int _pageSize;
-  
+
   // FIX 1: Page numbers almost always start at 1.
-  int _currentPage = 1; 
+  int _currentPage = 1;
   bool _hasReachedMax = false;
   bool isLoading = false;
 
@@ -32,7 +32,6 @@ class PaginationService<T> {
         isLoading = false;
       },
       failure: (error) {
-       
         isLoading = false;
       },
     );

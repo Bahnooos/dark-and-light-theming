@@ -1,16 +1,22 @@
 import 'package:dark_and_light_theming/core/di/dependency_injection.dart';
+import 'package:dark_and_light_theming/core/helpers/cached_helper.dart';
+import 'package:dark_and_light_theming/features/home/data/models/moves_response.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/home/home_cubit.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_cubit.dart';
 import 'package:dark_and_light_theming/features/home/presentation/logic/theme_cubit/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 
 import 'core/routing/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupGetIt();
+  CacheHelper.init();
+  Hive.registerAdapter(MovesResponseAdapter());
+  Hive.registerAdapter(ResultsAdapter());
 
   runApp(
     ScreenUtilInit(

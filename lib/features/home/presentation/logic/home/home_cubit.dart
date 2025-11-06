@@ -1,3 +1,4 @@
+import 'package:dark_and_light_theming/core/helpers/cached_helper.dart';
 import 'package:dark_and_light_theming/core/helpers/pagination_service.dart';
 import 'package:dark_and_light_theming/core/helpers/scroll_manager_mixin.dart';
 import 'package:dark_and_light_theming/features/home/data/models/moves_response.dart';
@@ -25,7 +26,8 @@ class HomeCubit extends Cubit<HomeState> with ScrollManagerMixin {
     final response = await paginationService.fetchNextPage();
     response?.when(
       success: (data) {
-        _allITems = data ;
+        _allITems = data;
+        CacheHelper.saveData(key: 'results', value: _allITems);
         return emit(
           HomeSuccess(
             data: _allITems,
@@ -34,7 +36,19 @@ class HomeCubit extends Cubit<HomeState> with ScrollManagerMixin {
           ),
         );
       },
-      failure: (failure) => emit(HomeError(errorMessage: failure.message)),
+      failure: (failure) {
+        final cacheMovies = CacheHelper.getData('results');
+        if (cacheMovies != null) {
+          return emit(
+            HomeSuccess(
+              data: cacheMovies,
+              isLoadingMore: false,
+              nextPageError: null,
+            ),
+          );
+        }
+        return emit(HomeError(errorMessage: failure.message));
+      },
     );
   }
 
@@ -58,7 +72,7 @@ class HomeCubit extends Cubit<HomeState> with ScrollManagerMixin {
     }
     response.when(
       success: (data) {
-        if ( data.isEmpty) {
+        if (data.isEmpty) {
           emit(
             HomeSuccess(
               data: currentState.data,
@@ -68,6 +82,8 @@ class HomeCubit extends Cubit<HomeState> with ScrollManagerMixin {
           );
           return;
         }
+        CacheHelper.saveData(key: 'results', value: _allITems);
+
         _allITems.addAll(data);
         return emit(
           HomeSuccess(
